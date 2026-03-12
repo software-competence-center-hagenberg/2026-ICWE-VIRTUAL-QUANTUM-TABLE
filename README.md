@@ -2,4 +2,4 @@
 Online appendix for a demonstration of the Virtual Quantum Table: https://quantumtable.scch.at/
 
 * **src/:** Source files
-* **docs/:** 
+* **docs/:** Supplementary material
