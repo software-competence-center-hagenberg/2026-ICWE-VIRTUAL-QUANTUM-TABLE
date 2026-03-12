@@ -1,7 +1,5 @@
-# Quantum Table
-
-## Deployment in VM
+# Deployment using Docker
 
 ```bash
-docker run -d -p 80:80 --restart unless-stopped --name quantum-table PATH_TO_IMAGE/quantum-table:main
+docker run -d -p 84:80 --restart unless-stopped --name quantum-table containers.github.scch.at/humace/quantum-table:main
 ```
