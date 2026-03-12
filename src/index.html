@@ -1,0 +1,136 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8">
+ <title>scch { Quantum Circuit Demonstrator }</title> <script> (function () { const params = new URLSearchParams(window.location.search); const apiKey = params.get('apiKey'); if (apiKey) { document.cookie = `api_key=${encodeURIComponent(apiKey)}; path=/`; } })(); </script> <link rel="stylesheet" href="styles.css">  <link rel="icon" type="image/x-icon" href="/favicon.ico"> </head> <body> <main> <div class="quantum-table"> <div class="palette" id="palette"> <button draggable="true" data-gate="H" data-label="Hadamard">H</button> <button draggable="true" data-gate="X" data-label="Pauli&nbsp;X">X</button> <button draggable="true" data-gate="Y" data-label="Pauli&nbsp;Y">Y</button> <button draggable="true" data-gate="Z" data-label="Pauli&nbsp;Z">Z</button> <button draggable="true" data-gate="S" data-label="Phase&nbsp;S">S</button> <button draggable="true" data-gate="T" data-label="Phase&nbsp;T">T</button> <button draggable="true" data-gate="M" data-label="Measure">M</button> <button draggable="true" data-gate="C" data-label="Control">◎</button> </div>
+  <div class="table-surface">
+    <header>scch { <span>Quantum Table</span> }</header>
+    <p class="instructions">
+      Pick a gate token (click to arm or drag) and drop it onto a slot. Double-click a slot to remove
+      a gate. Press “Run Circuit” to recalculate amplitudes and see updated probabilities.
+    </p>
+
+    <div class="grid" id="circuitGrid">
+      <div class="row" data-row="0">
+        <div class="qubit-label">
+          <strong>|q₀⟩</strong>
+          <small>init |0⟩</small>
+          <span class="qubit-led" data-led="0" title="P(|1⟩)=0.00"></span>
+        </div>
+        <div class="slot" data-row="0" data-col="0"></div>
+        <div class="slot" data-row="0" data-col="1"></div>
+        <div class="slot" data-row="0" data-col="2"></div>
+        <div class="slot" data-row="0" data-col="3"></div>
+        <div class="slot" data-row="0" data-col="4"></div>
+        <div class="slot" data-row="0" data-col="5"></div>
+        <div class="measure-stack">
+          ⟨Z⟩
+          <div class="measure-value" data-measure="0">0.00</div>
+        </div>
+      </div>
+
+      <div class="row" data-row="1">
+        <div class="qubit-label">
+          <strong>|q₁⟩</strong>
+          <small>init |0⟩</small>
+          <span class="qubit-led" data-led="1" title="P(|1⟩)=0.00"></span>
+        </div>
+        <div class="slot" data-row="1" data-col="0"></div>
+        <div class="slot" data-row="1" data-col="1"></div>
+        <div class="slot" data-row="1" data-col="2"></div>
+        <div class="slot" data-row="1" data-col="3"></div>
+        <div class="slot" data-row="1" data-col="4"></div>
+        <div class="slot" data-row="1" data-col="5"></div>
+        <div class="measure-stack">
+          ⟨Z⟩
+          <div class="measure-value" data-measure="1">0.00</div>
+        </div>
+      </div>
+
+      <div class="row" data-row="2">
+        <div class="qubit-label">
+          <strong>|q₂⟩</strong>
+          <small>init |0⟩</small>
+          <span class="qubit-led" data-led="2" title="P(|1⟩)=0.00"></span>
+        </div>
+        <div class="slot" data-row="2" data-col="0"></div>
+        <div class="slot" data-row="2" data-col="1"></div>
+        <div class="slot" data-row="2" data-col="2"></div>
+        <div class="slot" data-row="2" data-col="3"></div>
+        <div class="slot" data-row="2" data-col="4"></div>
+        <div class="slot" data-row="2" data-col="5"></div>
+        <div class="measure-stack">
+          ⟨Z⟩
+          <div class="measure-value" data-measure="2">0.00</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="probability-panel">
+      <div class="axis">
+        <span class="axis-prob">Probability</span>
+        <span class="axis-states">States</span>
+      </div>
+      <div class="probability-list" id="probabilityList">
+        <div class="prob-row" data-index="0">
+          <span class="state-tag">000</span>
+          <div class="bar-track"><div class="bar"></div><div class="target-bar"></div></div>
+          <input class="value" type="text" inputmode="decimal" value="1.000"><span class="target-value"></span>
+        </div>
+        <div class="prob-row" data-index="1">
+          <span class="state-tag">001</span>
+          <div class="bar-track"><div class="bar"></div><div class="target-bar"></div></div>
+          <input class="value" type="text" inputmode="decimal" value="0.000"><span class="target-value"></span>
+        </div>
+        <div class="prob-row" data-index="2">
+          <span class="state-tag">010</span>
+          <div class="bar-track"><div class="bar"></div><div class="target-bar"></div></div>
+          <input class="value" type="text" inputmode="decimal" value="0.000"><span class="target-value"></span>
+        </div>
+        <div class="prob-row" data-index="3">
+          <span class="state-tag">011</span>
+          <div class="bar-track"><div class="bar"></div><div class="target-bar"></div></div>
+          <input class="value" type="text" inputmode="decimal" value="0.000"><span class="target-value"></span>
+        </div>
+        <div class="prob-row" data-index="4">
+          <span class="state-tag">100</span>
+          <div class="bar-track"><div class="bar"></div><div class="target-bar"></div></div>
+          <input class="value" type="text" inputmode="decimal" value="0.000"><span class="target-value"></span>
+        </div>
+        <div class="prob-row" data-index="5">
+          <span class="state-tag">101</span>
+          <div class="bar-track"><div class="bar"></div><div class="target-bar"></div></div>
+          <input class="value" type="text" inputmode="decimal" value="0.000"><span class="target-value"></span>
+        </div>
+        <div class="prob-row" data-index="6">
+          <span class="state-tag">110</span>
+          <div class="bar-track"><div class="bar"></div><div class="target-bar"></div></div>
+          <input class="value" type="text" inputmode="decimal" value="0.000"><span class="target-value"></span>
+        </div>
+        <div class="prob-row" data-index="7">
+          <span class="state-tag">111</span>
+          <div class="bar-track"><div class="bar"></div><div class="target-bar"></div></div>
+          <input class="value" type="text" inputmode="decimal" value="0.000"><span class="target-value"></span>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="control-row">
+      <button id="runBtn">Run Circuit</button>
+      <button id="clearBtn">Clear Circuit</button>
+      <button id="generateBtn">
+        <span class="btn-label">Generate Circuit</span>
+        <span class="btn-spinner" aria-hidden="true"></span>
+      </button>
+      <button id="simplifyBtn">
+        <span class="btn-label">Optimize Circuit</span>
+        <span class="btn-spinner" aria-hidden="true"></span>
+      </button>
+      <button id="luckBtn" class="full-row">
+        <span class="btn-label">I'm feeling lucky</span>
+        <span class="btn-spinner" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div id="simplifyStatus" class="simplify-status"></div>
+  </div>
+</div>
+</main> <script src="app.js" defer></script> </body> </html>
+
