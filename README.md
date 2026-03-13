@@ -13,5 +13,6 @@ Online appendix for a demonstration of the Virtual Quantum Table: https://quantu
   * **`2-SYNTHESIS.md`** This prompt synthesizes a quantum circuit based on a set of probability states and selected gates.
   * **`3-OPTIMIZATION.md`** This prompt optimizes the current quantum circuit based on a set of probability states and selected gates.
   * **`4-DISCOVERY.md`** This prompt generates a random, interesting quantum circuit based on selected gates.
-* **`Photos`** Photos of the Quantum Table.
-* **`Videos`** Videos of the Quantum Table.
+* **`Tests`** Test cases for the simulation feature: Do the computed probability states correspond to the quantum circuit?
+* **`Photos`** Photos of the Quantum Table
+* **`Videos`** Videos of the Quantum Table
